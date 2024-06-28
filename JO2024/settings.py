@@ -30,7 +30,7 @@ DEBUG = True
 
 APP_NAME = os.environ.get("JO2024")
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "studi-billetterie-jo2024-34f8937ae208.herokuapp.com"]
 
 
 # Application definition
