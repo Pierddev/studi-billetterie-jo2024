@@ -1,0 +1,49 @@
+{% extends "jo2024/index.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="flex w-full justify-center">
+    <img class="w-[80%] max-w-1000 border border-shadow rounded-20" src="{% static 'tickets/images/image_homepage.jpg' %}">
+</div>
+<div class="w-full mt-50">
+    <div class="flex items-center justify-center w-full">
+        <div class="w-300 h-1 bg-shadow"></div>
+        <h2 class="text-center font-semibold text-28 text-nowrap px-20">Les epreuves</h2>
+        <div class="w-300 h-1 bg-shadow"></div>
+    </div>
+    <div class="flex justify-center w-full mt-50">
+        <div class="flex space-x-50 w-[90%] max-w-1500">
+            <img class="h-550 border border-shadow rounded-15" src="{% static 'tickets/images/sport_combat.jpg' %}">
+            <div class="relative">
+                <h3 class="before:absolute before:top-8 before:-left-0 before before:w-20 before:h-8 before:bg-shadow before:rounded-full ml-25 text-20 font-semibold">Les sports de combat</h3>
+                <p class="mt-20">Les sports de combat aux Jeux Olympiques sont une vitrine exceptionnelle de force, de technique et de discipline. 
+                Ces épreuves regroupent des disciplines variées, allant des arts martiaux traditionnels aux sports de lutte modernes, 
+                permettant aux athlètes de démontrer leur compétence et leur esprit compétitif. Parmi les sports de combat les plus emblématiques 
+                figurent le judo, le taekwondo, la boxe et la lutte.</p>
+                <ul class="mt-20 list-disc space-y-10">
+                    <li><span class="font-bold">Judo</span> : Originaire du Japon, le judo se concentre sur des techniques de projection et de soumission. Les judokas s'affrontent 
+                    pour maîtriser leur adversaire tout en respectant des principes d'honneur et de discipline.</li>
+                    <li><span class="font-bold">Taekwondo</span> : Cet art martial coréen est célèbre pour ses coups de pied spectaculaires et ses techniques rapides. 
+                    Les combattants cherchent à marquer des points en touchant des zones spécifiques de leur adversaire avec précision et puissance.</li>
+                    <li><span class="font-bold">Boxe</span> : La boxe olympique, avec ses catégories de poids et ses rounds courts, met en avant la technique, la vitesse et 
+                    l'endurance des pugilistes. Chaque coup doit être stratégique, et les athlètes doivent faire preuve de courage et de résilience.</li>
+                    <li><span class="font-bold">Lutte</span> : Divisée en lutte gréco-romaine et lutte libre, cette discipline demande une force brute et une agilité extrême. Les lutteurs 
+                    utilisent des prises et des lancers pour immobiliser ou contrôler leur adversaire, le tout dans un cadre strictement réglementé.</li>
+                </ul>
+                <p class="mt-20">Ces sports de combat ne sont pas seulement des épreuves de force physique, mais aussi des démonstrations de stratégie, 
+                de respect et de mentalité de guerrier. Ils captivent les spectateurs par leur intensité et la passion des athlètes qui se 
+                battent pour la gloire olympique.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="relative w-full flex justify-center font-semibold h-50">
+        <a class="bg-buy text-shadow border border-shadow absolute hover:mt-2 hover:ml-3 text-center py-10 px-50 rounded-10 transition-all duration-150" href="{% url 'tickets_list' %}">Acheter mes billets</a>
+        <a class="absolute -z-10 mt-7 ml-12 bg-shadow text-shadow text-center py-10 px-50 rounded-10" href="{% url 'tickets_list' %}">Acheter mes billets</a>
+    </div>
+</div>
+
+{% endblock %}

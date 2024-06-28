@@ -1,0 +1,48 @@
+{% extends "jo2024/index.html" %}
+
+{% load static %}
+
+{% block title %}Les tickets - {% endblock %}
+
+{% block content %}
+
+<div>
+    {% if messages %}
+        <div id="message">
+            {% for message in messages %}
+                <div class="absolute font-semibold bottom-20 right-20 bg-buy rounded-10 py-5 px-10">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+<div class="w-full flex flex-col items-center">
+    <div class="flex items-center justify-center w-full">
+        <div class="w-300 h-1 bg-shadow"></div>
+        <h2 class="text-center font-semibold text-28 text-nowrap px-20">Billets disponibles</h2>
+        <div class="w-300 h-1 bg-shadow"></div>
+    </div>
+    <ul class="flex space-x-50 my-50">
+        {% for ticket in tickets %}
+            <li class="flex flex-col items-center bg-white border border-shadow p-20 rounded-10 drop-shadow w-250 h-460">
+                <p class="absolute bg-tickettag -top-13 py-2 px-10 rounded-5 text-shadow border border-shadow text-16 font-bold uppercase">{{ ticket.name }}</p>
+                <img class="h-300 rounded-5" src="{% static ticket.image %}" alt="ticket image">
+                <p class="text-center mt-10 line-clamp-2 text-14">{{ ticket.description }}</p> 
+                <p class="font-semibold my-15">{{ ticket.price }}€</p>
+                <div class="relative w-full flex justify-center text-14 font-semibold">
+                    <form class="bg-addcart text-shadow border border-shadow hover:absolute hover:mt-1 hover:ml-3 text-center rounded-5 transition-all duration-100" method="post" action="{% url 'add_to_cart' ticket.id %}">
+                        {% csrf_token %}
+                        <button class="py-5 px-10" type="submit">Ajouter au panier</button>
+                    </form>
+                    <p class="absolute -z-10 mt-5 ml-8 py-5 px-10 bg-shadow text-shadow rounded-5">Ajouter au panier</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="relative w-full flex justify-center font-semibold h-50">
+        <a class="bg-buy text-shadow border border-shadow absolute hover:mt-2 hover:ml-3 text-center py-10 px-50 rounded-10 transition-all duration-150" href="{% url 'cart_detail' %}">Voir mon panier</a>
+        <a class="absolute -z-10 mt-7 ml-12 bg-shadow text-shadow text-center py-10 px-50 rounded-10" href="{% url 'cart_detail' %}">Voir mon panier</a>
+    </div>
+</div>
+
+{% endblock %}

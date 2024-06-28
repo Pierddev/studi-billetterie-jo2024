@@ -1,0 +1,67 @@
+{% extends "jo2024/index.html" %}
+
+{% load static %}
+
+{% block title %}Panier - {% endblock %}
+
+{% block content %}
+<div class="w-full flex flex-col items-center">
+    <div class="flex items-center justify-center w-full">
+        <div class="w-300 h-1 bg-shadow"></div>
+        <h2 class="text-center font-semibold text-28 text-nowrap px-20">Panier</h2>
+        <div class="w-300 h-1 bg-shadow"></div>
+    </div>
+    <ul class="mt-20">
+        {% for item in cart_items %}
+            <li class="relative flex items-center border border-shadow bg-white drop-shadow rounded-15 my-15">
+                <img class="h-100 rounded-7 mx-15 my-15" src="{% static item.ticket.image %}" alt="ticket image">
+                <div class="flex flex-col justify-center items-center h-130 w-300 border-x-1 border-shadow">
+                    <div class="text-24 font-semibold">{{ item.ticket.name }}</div>
+                    <div class="text-16">{{ item.ticket.price }}€</div>
+                </div>
+                <div class="flex flex-col justify-center items-center font-semibold text-24 mx-15">
+                    <div>x</div>
+                    <div>{{ item.quantity }}</div>
+                </div>
+                {% comment %} {{ item.quantity }} x {{ item.ticket.name }} - {{ item.ticket.price }}€ {% endcomment %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% if cart_items %}
+        <form action="{% url 'clear_cart' %}" method="post">
+            {% csrf_token %}
+            <button class="my-20" type="submit">
+                <div class="relative w-full flex justify-center text-nowrap h-50">
+                    <a class="bg-addcart text-shadow border border-shadow absolute hover:mt-2 hover:ml-3 text-center py-5 px-10 rounded-10 transition-all duration-150">
+                        <i class="fa-solid fa-trash-can"></i>
+                        Vider le panier
+                    </a>
+                    <a class="absolute -z-10 mt-7 ml-12 bg-shadow text-shadow text-center py-5 px-10 rounded-10">
+                        <i class="fa-solid fa-trash-can"></i>
+                        Vider le panier
+                    </a>
+                </div>
+            </button>
+        </form>
+        <h2 class="font-semibold mb-20">Prix total : {{ total_price }}€</h2>
+        {% if user.is_authenticated %}
+            <div class="relative w-full flex justify-center font-semibold h-50">
+                <button class="bg-buy text-shadow border border-shadow absolute hover:mt-2 hover:ml-3 text-center py-10 px-50 rounded-10 transition-all duration-150" id="submitBtn">Passer la commande</button>
+                <a class="absolute -z-10 mt-7 ml-12 bg-shadow text-shadow text-center py-10 px-50 rounded-10" href="{% url 'tickets_list' %}">Passer la commande</a>
+            </div>
+        {% else %}
+            <div class="flex">
+                <div class="mr-5">Veuillez vous connecter pour procéder au paiement.</div>
+                <a class="font-semibold" href="{% url 'login' %}">Se connecter</a>
+            </div>
+        {% endif %}
+    {% else %}
+        <p class="my-50">Votre panier est vide.</p>
+    {% endif %}
+    <div class="relative w-full flex justify-center font-semibold h-50 mt-20">
+        <a class="bg-seecart text-shadow border border-shadow absolute hover:mt-2 hover:ml-3 text-center py-10 px-50 rounded-10 transition-all duration-150" href="{% url 'tickets_list' %}">Continuer les achats</a>
+        <a class="absolute -z-10 mt-7 ml-12 bg-shadow text-shadow text-center py-10 px-50 rounded-10" href="{% url 'tickets_list' %}">Continuer les achats</a>
+    </div>
+</div>
+
+{% endblock %}

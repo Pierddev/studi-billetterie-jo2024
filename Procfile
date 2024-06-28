@@ -1,0 +1,1 @@
+web: gunicorn JO2024.wsgi

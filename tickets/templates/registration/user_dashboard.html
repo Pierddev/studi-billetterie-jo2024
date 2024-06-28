@@ -1,0 +1,140 @@
+{% extends "jo2024/index.html" %}
+
+{% load static %}
+
+{% block title %}Votre espace - {% endblock %}
+
+{% block content %}
+
+<div class="flex items-center justify-center w-full">
+    <div class="w-300 h-1 bg-shadow"></div>
+    <h2 class="text-center font-semibold text-28 text-nowrap px-20">Votre espace</h2>
+    <div class="w-300 h-1 bg-shadow"></div>
+</div>
+
+{% if is_superuser %}
+<div class="flex flex-col items-center mt-50">
+    <div class="flex items-center justify-center w-full mb-50">
+        <div class="w-300 h-1 bg-shadow"></div>
+        <h2 class="text-center font-semibold text-20 text-nowrap px-20">Administration</h2>
+        <div class="w-300 h-1 bg-shadow"></div>
+    </div>
+
+    <div class="flex space-x-20">
+        <div class="relative flex flex-col items-center border border-shadow px-50 py-20 rounded-10 bg-white drop-shadow">
+            <div class="absolute -top-20 font-semibold text-20 mb-20 bg-tickettag py-5 px-10 border border-shadow rounded-5">Création</div>
+            <form class="flex flex-col justify-center mt-20" action="{% url 'create_ticket' %}" method="post">
+                {% csrf_token %}
+                <label for="name">Nom :</label>
+                <input type="text" id="name" name="name" required><br>
+                <label for="description">Description :</label>
+                <input type="text" id="description" name="description" required><br>
+                <label for="price">Prix (€) :</label>
+                <input type="number" id="price" name="price" step="0.01" required><br>
+                <button class="mt-20" type="submit">
+                    <div class="relative w-full font-semibold flex justify-center text-nowrap h-50">
+                        <a class="bg-buy text-shadow border border-shadow absolute hover:mt-2 hover:ml-3 text-center py-5 px-10 rounded-10 transition-all duration-150">
+                            <i class="fa-solid fa-plus mr-10"></i>
+                            Créer un ticket
+                        </a>
+                        <a class="absolute -z-10 mt-7 ml-12 bg-shadow text-shadow text-center py-5 px-10 rounded-10">
+                            <i class="fa-solid fa-plus mr-10"></i>
+                            Créer un ticket
+                        </a>
+                    </div>
+                </button>
+            </form>
+        </div>
+        
+        <div class="relative flex flex-col items-center border border-shadow px-50 py-20 rounded-10 bg-white drop-shadow">
+            <div class="absolute -top-20 font-semibold text-20 mb-20 bg-tickettag py-5 px-10 border border-shadow rounded-5">Suppression</div>
+            <ul class="mt-20">
+                {% for ticket in tickets %}
+                    <li class="flex items-center space-x-50 my-20">
+                        <p class="grow font-semibold">{{ ticket.name }} - {{ ticket.price }}€</p>
+                        <a class="bg-danger py-5 px-10 rounded-7 border border-shadow delete-ticket" href="{% url 'delete_ticket' ticket.id %}">
+                            <i class="fa-solid fa-trash-can text-white"></i>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="relative flex flex-col items-center border border-shadow px-50 py-20 rounded-10 bg-white drop-shadow">
+            <div class="absolute -top-20 font-semibold text-20 mb-20 bg-tickettag py-5 px-10 border border-shadow rounded-5">Statistiques</div>
+            <table class="table-auto border border-shadow border-spacing-1 border-separate mt-20">
+                <thead>
+                    <tr class="bg-slate-200">
+                        <th class="w-200 border border-shadow">Nom</th>
+                        <th class="w-100 border border-shadow">Ventes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stat in sales_stats %}
+                        <tr>
+                            <td class="border border-shadow pl-5">{{ stat.ticket__name }}</td>
+                            <td class="text-center border border-shadow">{{ stat.total_sold }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-50">
+        <div class="relative flex flex-col items-center border border-shadow px-50 py-20 rounded-10 bg-white drop-shadow">
+            <div class="absolute -top-20 font-semibold text-20 mb-20 bg-tickettag py-5 px-10 border border-shadow rounded-5">Journal des changements</div class="">
+            <table class="table-auto border border-shadow border-spacing-1 border-separate mt-20">
+                <thead>
+                    <tr class="bg-slate-200">
+                        <th class="border border-shadow px-10">Utilisateur</th>
+                        <th class="border border-shadow px-10">Action</th>
+                        <th class="border border-shadow px-10">Nom du ticket</th>
+                        <th class="border border-shadow px-10">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                        <tr>
+                            <td class="border border-shadow px-10">{{ log.admin.username }}</td>
+                            <td class="border border-shadow px-10">{{ log.get_action_display }}</td>
+                            <td class="border border-shadow px-10">{{ log.ticket_name }}</td>
+                            <td class="border border-shadow px-10">{{ log.action_date }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="flex flex-col items-center mt-50">
+    <div class="flex items-center justify-center w-full mb-50">
+        <div class="w-300 h-1 bg-shadow"></div>
+        <h2 class="text-center font-semibold text-20 text-nowrap px-20">Mes billets</h2>
+        <div class="w-300 h-1 bg-shadow"></div>
+    </div>
+    {% if user_purchases %}
+        <ul>
+        {% for purchase in user_purchases %}
+            <li class="relative flex items-center border border-shadow bg-white drop-shadow rounded-15 my-15">
+                <img class="h-100 rounded-7 mx-15 my-15" src="{% static purchase.ticket.image %}" alt="ticket image">
+                <div class="flex flex-col justify-center items-center h-130 w-300 border-x-1 border-shadow">
+                    <div class="text-24 font-semibold">{{ purchase.ticket.name }}</div>
+                    <div class="text-16">{{ purchase.purchase_date }}</div>
+                </div>
+                <div class="font-semibold text-16 mx-15 text-wrap">
+                    <a class="flex justify-center items-center text-center h-130 w-65" href="{% url 'view_qr_code' purchase.id %}">Voir QR Code</a>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez acheté aucun billet pour le moment.</p>
+    {% endif %}
+</div>
+
+
+<script src="{% static 'tickets/js/confirm_delete.js' %}" defer></script>
+
+{% endblock %}

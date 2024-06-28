@@ -1,0 +1,88 @@
+{% load tailwind_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}Billetterie Jeux Olympiques 2024</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'tickets/images/logo-jo.ico' %}" /> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    {% tailwind_css %}
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'tickets/js/app.js' %}" defer></script>
+</head>
+<body class="bg-background min-h-screen">
+    <nav class="fixed z-20 flex items-center w-full py-10 border-b border-shadow backdrop-blur-10 bg-white/30 top-0 font-semibold">
+        <div class="absolute flex right-20 justify-center items-center">
+            <div class="w-full">
+                {% if user.is_authenticated %}
+                    <div class="flex items-center space-x-10">
+                        <div>Bonjour, {{ user }} !</div>
+                        <div class="text-20 text-shadow">
+                            <a href="{% url 'user_dashboard' %}"><i title="Espace utilisateur" class="fa-solid fa-user"></i></a>
+                        </div>
+                        <div class="text-20 text-buy">
+                            <a href="{% url 'cart_detail' %}"><i title="Voir panier" class="fa-solid fa-cart-shopping"></i></a>
+                        </div>
+                        <div class="text-20 text-red-800">
+                            <a href="{% url 'logout' %}"><i title="Se déconnecter" class="fa-solid fa-right-from-bracket"></i></a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}">Se connecter</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="flex w-full justify-center items-center space-x-50">
+            <a href="{% url 'homepage' %}">Accueil</a>
+            <a href="{% url 'homepage' %}">
+                <img class="w-50" src="{% static 'tickets/images/logo-jo.png' %}" alt="logo des jo 2024">
+            </a>
+            <a href="{% url 'tickets_list' %}">Les tickets</a>
+        </div>
+    </nav>
+    
+    <div class="flex flex-col mt-120 min-h-screen">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="{% static 'js/livereload.js' %}"></script>
+</body>
+<footer class="bg-footer text-white py-8 mt-50">
+    <div class="container mx-auto py-20">
+        <div class="flex justify-center space-x-50">
+            <div class="max-w-400">
+                <h4 class="text-lg font-semibold mb-4">À propos de nous</h4>
+                <p class="text-14 font-light">
+                    Bienvenue sur notre billetterie en ligne. Achetez vos billets pour les événements sportifs des Jeux Olympiques facilement et en toute sécurité.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                <ul class="text-14 font-light space-y-2">
+                    <li>Email: info@billetteriejo2024studi.com</li>
+                    <li>Téléphone: +33 1 23 45 67 89</li>
+                    <li>Adresse: 123 Rue Olympique Studi, 75000 Paris, France</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Suivez-nous</h4>
+                <ul class="flex space-x-15">
+                    <li><a href="https://facebook.com" target="_blank" class="hover:text-gray-400"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://twitter.com" target="_blank" class="hover:text-gray-400"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="https://instagram.com" target="_blank" class="hover:text-gray-400"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="https://linkedin.com" target="_blank" class="hover:text-gray-400"><i class="fab fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-50 text-center text-14 font-light">
+            <p>&copy; 2024 Billetterie Olympique. Tous droits réservés.</p>
+        </div>
+    </div>
+</footer>
+</html>

@@ -1,0 +1,18 @@
+{% extends "jo2024/index.html" %}
+
+{% block title %}Paiement réussi - {% endblock %}
+
+{% block content %}
+
+<div class="flex flex-col w-full justify-center items-center">
+    <div class="flex my-200 items-center">
+        <i class="fa-solid fa-square-xmark mr-20 text-24 text-red-600"></i>
+        <div class="text-20 font-semibold">Le paiement a échoué...</div>
+    </div>
+    <div class="relative w-full flex justify-center font-semibold h-50 mt-20">
+        <a class="bg-seecart text-shadow border border-shadow absolute hover:mt-2 hover:ml-3 text-center py-10 px-50 rounded-10 transition-all duration-150" href="{% url 'cart_detail' %}">Retour au panier</a>
+        <a class="absolute -z-10 mt-7 ml-12 bg-shadow text-shadow text-center py-10 px-50 rounded-10" href="{% url 'cart_detail' %}">Retour au panier</a>
+    </div>
+</div>
+
+{% endblock %}

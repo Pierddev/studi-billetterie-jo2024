@@ -1,0 +1,47 @@
+{% extends "jo2024/index.html" %}
+
+{% block title %}Connexion - {% endblock %}
+
+{% block content %}
+
+<div class="w-full flex flex-col items-center">
+    <div class="flex items-center justify-center w-full">
+        <div class="w-300 h-1 bg-shadow"></div>
+        <h2 class="text-center font-semibold text-28 text-nowrap px-20">Connexion</h2>
+        <div class="w-300 h-1 bg-shadow"></div>
+    </div>
+    <div class="mt-50">
+        <form method="post">
+            {% csrf_token %}
+            <div class="flex items-center justify-center space-x-10 mb-20">
+                <div>
+                    {{ form.username.label_tag }}
+                </div>
+                <div>
+                    {{ form.username }}
+                </div>
+            </div>
+            <div class="flex items-center justify-center space-x-10 mb-20">
+                <div>
+                    {{ form.password.label_tag }}
+                </div>
+                <div>
+                    {{ form.password }}
+                </div>
+            </div>
+            <div class="text-14 text-wrap text-red-800 max-w-500">
+                {{ form.non_field_errors }}
+            </div>
+            <div class="flex justify-center mt-50">
+                <p class="mr-5">Pas encore de compte ?</p>
+                <a class="font-semibold" href="{% url 'signup' %}">S'inscrire</a>
+            </div>
+            <div class="relative w-full flex justify-center  font-semibold h-50 mt-20">
+                <button class="bg-buy border border-shadow absolute hover:mt-2 hover:ml-3 text-center py-10 px-50 rounded-10 transition-all duration-150" type="submit">Se connecter</button>
+                <div class="absolute -z-10 mt-7 ml-12 bg-shadow text-shadow text-center py-10 px-50 rounded-10">Se connecter</div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
