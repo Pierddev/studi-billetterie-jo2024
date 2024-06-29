@@ -133,13 +133,6 @@ else:
         }
     }
 
-if IS_HEROKU_APP:
-    DATABASE_URL = 'postgresql://<postgresql>'
-else:
-    DATABASE_URL = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
-
-DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
