@@ -15,9 +15,6 @@ from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = Path(__file__).resolve().parent # Heroku
@@ -27,6 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent # Heroku
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
+
+# Load environment variables from .env file
+if not IS_HEROKU_APP:
+    load_dotenv()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 if IS_HEROKU_APP:
