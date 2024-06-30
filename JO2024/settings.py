@@ -120,7 +120,7 @@ if IS_HEROKU_APP:
             "ENGINE": "django.db.backends.postgresql",
             "NAME": "d1hl4uopppcoef",
             "USER": "u710532hn7shff",
-            "PASSWORD": "p18f4c02100d608e88eb55fd3e053adbbe5042dfff7080e2487027e16ababf79f",
+            "PASSWORD": "DB_PASSWORD",
             "HOST": "c9tiftt16dc3eo.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com",
             "PORT": "5432",
         }
