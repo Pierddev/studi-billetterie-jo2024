@@ -47,7 +47,7 @@
         {% if user.is_authenticated %}
             <div class="relative w-full flex justify-center font-semibold h-50">
                 <button class="bg-buy text-shadow border border-shadow absolute hover:mt-2 hover:ml-3 text-center py-10 px-50 rounded-10 transition-all duration-150" id="submitBtn">Passer la commande</button>
-                <a class="absolute -z-10 mt-7 ml-12 bg-shadow text-shadow text-center py-10 px-50 rounded-10" href="{% url 'tickets_list' %}">Passer la commande</a>
+                <a class="absolute -z-10 mt-7 ml-12 bg-shadow text-shadow text-center py-10 px-50 rounded-10" href="{% url 'success' %}">Passer la commande</a>
             </div>
         {% else %}
             <div class="flex">
