@@ -214,5 +214,10 @@ STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 STRIPE_ENDPOINT_SECRET = os.getenv('STRIPE_ENDPOINT_SECRET')
 STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
 
+if IS_HEROKU_APP:
+    STRIPE_DOMAIN_URL = "https://studi-billetterie-jo2024-34f8937ae208.herokuapp.com/"
+else:
+    STRIPE_DOMAIN_URL = "http://localhost:8000/"
+
 LOGIN_REDIRECT_URL = 'homepage'
 LOGOUT_REDIRECT_URL = 'homepage'

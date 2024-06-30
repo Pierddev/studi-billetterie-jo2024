@@ -124,7 +124,7 @@ def create_checkout_session(request):
     cart_description = cart_description.strip(", ")
 
     if request.method == 'GET':
-        domain_url = 'http://localhost:8000/'
+        domain_url = settings.STRIPE_DOMAIN_URL
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
             # Create new Checkout Session for the order
